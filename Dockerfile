@@ -4,9 +4,6 @@ FROM hashicorp/packer:light@sha256:1e298ef74fc816654238f7c17ea0f0636c2e19d3baf77
 RUN apk update && \
     apk upgrade && \
     apk add curl && \
-    apk add git=2.32.3-r0 && \
-    apk add openssl=1.1.1q-r0 && \
-    apk add gnupg=2.2.31-r1 && \
     apk add go && \
     apk add ansible
 
