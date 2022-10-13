@@ -21,7 +21,7 @@ RUN apk --update --no-cache add \
     sshpass \
     curl 
 
-RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+RUN adduser -S docker && echo "docker:docker" | chpasswd && adduser -S docker sudo
 
 RUN apk --update add --virtual \
     .build-deps \
@@ -38,7 +38,7 @@ RUN apk --update add --virtual \
     && apk del \
     .build-deps \
     && rm -rf /var/cache/apk/*
-    
+
 RUN curl -s -L -O "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" \
     && mv inspec-* /tmp/ \
     && /tmp/inspec-*
