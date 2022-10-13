@@ -14,7 +14,7 @@ RUN apk update && \
 
 
 RUN rm -rf /var/cache/apk/*
-
 COPY "entrypoint.sh" "/entrypoint.sh"
+RUN echo "inspec" >> /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh" "inspec"]
+ENTRYPOINT ["/entrypoint.sh"]
