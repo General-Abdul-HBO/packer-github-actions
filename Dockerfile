@@ -21,8 +21,8 @@ RUN apk --update --no-cache add \
     rsync \
     sshpass \
     rpm \
-    curl \
-    && curl -s -L -O inspec-5.18.14-1.el8.x86_64.rpm "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" 
+    wget \
+    && wget -q "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" 
 
 RUN apk --update add --virtual \
     .build-deps \
@@ -39,7 +39,7 @@ RUN apk --update add --virtual \
     && apk del \
     .build-deps \
     && rm -rf /var/cache/apk/*
-    
+
 RUN rpm -i inspec-*
 
 COPY "entrypoint.sh" "/entrypoint.sh"
