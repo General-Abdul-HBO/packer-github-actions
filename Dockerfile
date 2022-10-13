@@ -6,6 +6,7 @@ RUN apk update && \
     apk add curl && \
     apk add go && \
     apk add ansible && \
+    apk add git && \
     apk add wget rpm2cpio cpio && \
     wget "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" -O /tmp/inspec.rpm && \
     rpm2cpio /tmp/inspec.rpm | cpio -idmv && \
@@ -16,4 +17,4 @@ RUN rm -rf /var/cache/apk/*
 
 COPY "entrypoint.sh" "/entrypoint.sh"
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh" "inspec"]
