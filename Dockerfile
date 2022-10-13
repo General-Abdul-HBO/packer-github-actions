@@ -7,7 +7,7 @@ RUN apk update && \
     apk add go && \
     apk add ansible && \
     apk add wget rpm2cpio cpio && \
-    wget "http://packages.chef.io/files/${CHANNEL}/inspec/${VERSION}/el/7/inspec-${VERSION}-1.el7.x86_64.rpm" -O /tmp/inspec.rpm && \
+    wget "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" -O /tmp/inspec.rpm && \
     rpm2cpio /tmp/inspec.rpm | cpio -idmv && \
     rm -rf /tmp/inspec.rpm
 
