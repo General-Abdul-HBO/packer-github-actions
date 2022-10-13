@@ -21,7 +21,7 @@ RUN apk --update --no-cache add \
     sshpass \
     curl 
 
-RUN adduser -S docker && echo "docker:docker" | chpasswd && adduser -S docker sudo
+RUN adduser -S docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
 RUN apk --update add --virtual \
     .build-deps \
