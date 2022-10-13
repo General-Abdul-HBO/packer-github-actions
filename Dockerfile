@@ -22,8 +22,7 @@ RUN apk --update --no-cache add \
     sshpass \
     curl \
     && curl -s -L -O "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" \
-    && mv inspec-* /tmp/ \
-    && /tmp/inspec-*
+    && inspec-* 
 
 
 RUN apk --update add --virtual \
