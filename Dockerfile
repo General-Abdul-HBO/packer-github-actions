@@ -27,8 +27,6 @@ RUN apk --update add --virtual \
     openssl-dev \
     build-base \
     curl \
-    && curl -s -L "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" -C /tmp/  \
-    && /tmp/inspec-* \
     && pip3 install --upgrade \
     pip \
     cffi \
