@@ -5,7 +5,12 @@ RUN apk update && \
     apk upgrade && \
     apk add curl && \
     apk add go && \
+    apk add chef/inspec &&\
     apk add ansible
+
+RUN rm -v $(pwd):/share chef/inspec "$@";
+
+RUN rm -rf /var/cache/apk/*
 
 COPY "entrypoint.sh" "/entrypoint.sh"
 
