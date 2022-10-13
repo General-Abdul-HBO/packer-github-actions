@@ -1,7 +1,7 @@
 # see https://hub.docker.com/r/hashicorp/packer/tags for all available tags
 FROM hashicorp/packer:light@sha256:1e298ef74fc816654238f7c17ea0f0636c2e19d3baf77ed5f795b7f976a4ba96
 
-USER root
+
 
 ARG MITOGEN_VERSION=0.2.9
 ARG ANSIBLE_VERSION=3.2.0
@@ -14,10 +14,14 @@ RUN apk --update --no-cache add \
     openssh-client \
     openssl \
     python3\
+    sudo \
     py3-pip \
     py3-cryptography \
     rsync \
-    sshpass
+    sshpass \
+    curl 
+
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
 RUN apk --update add --virtual \
     .build-deps \
@@ -25,10 +29,6 @@ RUN apk --update add --virtual \
     libffi-dev \
     openssl-dev \
     build-base \
-    curl \
-    && curl -s -L -O "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" \
-    && mv inspec-* /tmp/ \
-    && /tmp/inspec-* \
     && pip3 install --upgrade \
     pip \
     cffi \
@@ -38,6 +38,12 @@ RUN apk --update add --virtual \
     && apk del \
     .build-deps \
     && rm -rf /var/cache/apk/*
+    
+RUN curl -s -L -O "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" \
+    && mv inspec-* /tmp/ \
+    && /tmp/inspec-*
+
+USER docker
 
 COPY "entrypoint.sh" "/entrypoint.sh"
 ENTRYPOINT ["/entrypoint.sh"]
