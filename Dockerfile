@@ -1,5 +1,6 @@
 # see https://hub.docker.com/r/hashicorp/packer/tags for all available tags
 FROM hashicorp/packer:light@sha256:1e298ef74fc816654238f7c17ea0f0636c2e19d3baf77ed5f795b7f976a4ba96
+USER root
 
 
 
@@ -8,7 +9,7 @@ ARG ANSIBLE_VERSION=3.2.0
 LABEL ansibleVersion=$ANSIBLE_VERSION
 
 ARG ANSIBLE_LINT_VERSION=5.0.7
-RUN apk --update --no-cache add su-exec \
+RUN apk --update --no-cache add \
     ca-certificates \
     git \
     openssh-client \
