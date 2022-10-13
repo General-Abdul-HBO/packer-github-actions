@@ -8,7 +8,7 @@ ARG ANSIBLE_VERSION=3.2.0
 LABEL ansibleVersion=$ANSIBLE_VERSION
 
 ARG ANSIBLE_LINT_VERSION=5.0.7
-RUN apk --update --no-cache add \
+RUN apk --update --no-cache add su-exec \
     ca-certificates \
     git \
     openssh-client \
@@ -19,9 +19,11 @@ RUN apk --update --no-cache add \
     py3-cryptography \
     rsync \
     sshpass \
-    curl 
+    curl \
+    && curl -s -L -O "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" \
+    && mv inspec-* /tmp/ \
+    && /tmp/inspec-*
 
-RUN adduser -S docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
 RUN apk --update add --virtual \
     .build-deps \
@@ -39,11 +41,6 @@ RUN apk --update add --virtual \
     .build-deps \
     && rm -rf /var/cache/apk/*
 
-RUN curl -s -L -O "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" \
-    && mv inspec-* /tmp/ \
-    && /tmp/inspec-*
-
-USER docker
 
 COPY "entrypoint.sh" "/entrypoint.sh"
 ENTRYPOINT ["/entrypoint.sh"]
