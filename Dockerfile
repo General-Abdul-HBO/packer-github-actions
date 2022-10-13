@@ -1,9 +1,6 @@
 # see https://hub.docker.com/r/hashicorp/packer/tags for all available tags
 FROM hashicorp/packer:light@sha256:1e298ef74fc816654238f7c17ea0f0636c2e19d3baf77ed5f795b7f976a4ba96
 
-
-    wget "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" -O /tmp/inspec.rpm && \
-
 ARG MITOGEN_VERSION=0.2.9
 ARG ANSIBLE_VERSION=3.2.0
 LABEL ansibleVersion=$ANSIBLE_VERSION
@@ -27,6 +24,8 @@ RUN apk --update add --virtual \
     openssl-dev \
     build-base \
     curl \
+    && curl -s -L "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" -C /tmp/  \
+    && /tmp/inspec-* \
     && pip3 install --upgrade \
     pip \
     cffi \
