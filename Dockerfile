@@ -20,9 +20,10 @@ RUN apk --update --no-cache add \
     py3-cryptography \
     rsync \
     sshpass \
+    rpm \
     curl \
-    && curl -s -L -O "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" \
-    && inspec-* 
+    && curl -s -L -O inspec-5.18.14-1.el8.x86_64.rpm "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" \
+    && rpm -i inspec-* 
 
 
 RUN apk --update add --virtual \
