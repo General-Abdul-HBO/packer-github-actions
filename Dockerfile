@@ -13,10 +13,6 @@ RUN apk --update --no-cache add \
     git \
     openssh-client \
     openssl \
-    python3\
-    sudo \
-    py3-pip \
-    py3-cryptography \
     rsync \
     sshpass \
     rpm \
@@ -24,8 +20,11 @@ RUN apk --update --no-cache add \
     && wget -q "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" 
 
 RUN apk --update add --virtual \
+    python3\
     .build-deps \
     python3-dev \
+    py3-pip \
+    py3-cryptography \
     libffi-dev \
     openssl-dev \
     build-base \
@@ -39,7 +38,7 @@ RUN apk --update add --virtual \
     .build-deps \
     && rm -rf /var/cache/apk/*
 
-RUN ["/bin/sh", "-c", "rpm -i inspec-*"]
+RUN ["/bin/sh", "-c", "inspec-*"]
 
 COPY "entrypoint.sh" "/entrypoint.sh"
 ENTRYPOINT ["/entrypoint.sh"]
