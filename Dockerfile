@@ -1,13 +1,16 @@
 # see https://hub.docker.com/r/hashicorp/packer/tags for all available tags
 FROM hashicorp/packer:light@sha256:1e298ef74fc816654238f7c17ea0f0636c2e19d3baf77ed5f795b7f976a4ba96
+LABEL maintainer="Chef Software, Inc. <docker@chef.io>"
 
-
-
-ARG MITOGEN_VERSION=0.2.9
 ARG ANSIBLE_VERSION=3.2.0
+ARG VERSION=5.18.14
+ARG CHANNEL=stable
 LABEL ansibleVersion=$ANSIBLE_VERSION
 
 ARG ANSIBLE_LINT_VERSION=5.0.7
+
+ENV PATH=/opt/inspec/bin:/opt/inspec/embedded/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 RUN apk --update --no-cache add \
     ca-certificates \
     git \
@@ -18,7 +21,10 @@ RUN apk --update --no-cache add \
     py3-cryptography \
     rsync \
     sshpass \
-    rpm 
+    wget rpm2cpio cpio \
+    && wget "https://packages.chef.io/files/${CHANNEL}/inspec/${VERSION}/el/8/inspec-${VERSION}-1.el8.x86_64.rpm" -O /tmp/inspec.rpm && \
+    rpm2cpio /tmp/inspec.rpm | cpio -idmv && \
+    rm -rf /tmp/inspec.rpm
 
 RUN apk --update add --virtual \
     .build-deps \
@@ -36,9 +42,5 @@ RUN apk --update add --virtual \
     .build-deps \
     && rm -rf /var/cache/apk/*
 
-ADD inspec-5.18.14-1.el8.x86_64.rpm  /inspec-5.18.14-1.el8.x86_64.rpm
-
-RUN rpm -i inspec-5.18.14-1.el8.x86_64.rpm
-
 COPY "entrypoint.sh" "/entrypoint.sh"
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh", "inspec"]
