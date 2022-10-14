@@ -22,7 +22,7 @@ RUN apk --update --no-cache add \
     rsync \
     sshpass \
     wget rpm2cpio cpio \
-    && wget "https://packages.chef.io/files/${CHANNEL}/inspec/${VERSION}/el/8/inspec-${VERSION}-1.el8.x86_64.rpm" -O /tmp/inspec.rpm && \
+    && wget -q "https://packages.chef.io/files/${CHANNEL}/inspec/${VERSION}/el/8/inspec-${VERSION}-1.el8.x86_64.rpm" -O /tmp/inspec.rpm && \
     rpm2cpio /tmp/inspec.rpm | cpio -idmv && \
     rm -rf /tmp/inspec.rpm
 
