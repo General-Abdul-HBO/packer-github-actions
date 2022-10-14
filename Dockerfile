@@ -22,6 +22,8 @@ RUN apk --update --no-cache add \
     wget \
     && wget -q "https://packages.chef.io/files/stable/inspec/5.18.14/el/8/inspec-5.18.14-1.el8.x86_64.rpm" 
 
+RUN apk add inspec-5.18.14-1.el8.x86_64.rpm
+
 RUN apk --update add --virtual \
     .build-deps \
     python3-dev \
@@ -37,8 +39,6 @@ RUN apk --update add --virtual \
     && apk del \
     .build-deps \
     && rm -rf /var/cache/apk/*
-
-RUN ["/bin/sh", "-c", "inspec-*"]
 
 COPY "entrypoint.sh" "/entrypoint.sh"
 ENTRYPOINT ["/entrypoint.sh"]
