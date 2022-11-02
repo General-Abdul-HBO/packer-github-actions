@@ -9,7 +9,7 @@ LABEL ansibleVersion=$ANSIBLE_VERSION
 
 ARG ANSIBLE_LINT_VERSION=5.0.7
 
-ENV PATH=/opt/inspec/bin:/opt/inspec/embedded/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH=/usr/bin/inspec
 
 RUN apk --update --no-cache add \
     ca-certificates \
@@ -21,10 +21,8 @@ RUN apk --update --no-cache add \
     py3-cryptography \
     rsync \
     sshpass \
-    wget rpm2cpio cpio \
-    && wget -q "https://packages.chef.io/files/${CHANNEL}/inspec/${VERSION}/el/8/inspec-${VERSION}-1.el8.x86_64.rpm" -O /tmp/inspec.rpm && \
-    rpm2cpio /tmp/inspec.rpm | cpio -idmv && \
-    rm -rf /tmp/inspec.rpm
+    curl \
+    && curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
 
 RUN apk --update add --virtual \
     .build-deps \
