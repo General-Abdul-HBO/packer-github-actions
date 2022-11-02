@@ -22,7 +22,7 @@ RUN apk --update --no-cache add \
     rsync \
     sshpass \
     wget \
-    && wget "https://omnitruck.chef.io/install.sh" | bash -s -- -P inspec
+    && wget "https://omnitruck.chef.io/install.sh"
 
 RUN apk --update add --virtual \
     .build-deps \
