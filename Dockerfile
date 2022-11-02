@@ -21,8 +21,8 @@ RUN apk --update --no-cache add \
     py3-cryptography \
     rsync \
     sshpass \
-    curl \
-    && curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+    wget \
+    && wget "https://omnitruck.chef.io/install.sh" | sudo bash -s -- -P inspec
 
 RUN apk --update add --virtual \
     .build-deps \
